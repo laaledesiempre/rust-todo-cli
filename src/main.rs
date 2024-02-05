@@ -1,16 +1,48 @@
-struct Todo {
-    list: String;
-    todo: String;
+enum Action {
+    add,
+    remove,
+    mark,
+    get,
+}
+
+struct Todo_action {
+    action: Action,
+    list: Option<String>,
+    todo: Option<String>,
 }
 
 fn main() {
     let args: Vec<String>= std::env::args().collect();
 
+    let todo_action = parse_args(&args);
     //println!("{:?}",args);
     if args[1] == "add" && args.len() >2 {
         println!("Added {}",args[2])
     } else {
         println!("not enough args");
+    }
+}
+
+// Args manipulation
+
+fn parse_args(args: &Vec<String>)-> Todo_action {
+    match args.len() {
+        2=>{
+            match args[1] { // $ todo get
+                String::from("get")=> Todo_action {
+                    action: Action::get,
+                    list: None,
+                    todo: None
+                }
+                _=>println!("Can't make a one long with {}!",args[1]);
+            }
+        }, 
+        3=> {
+            todo!("Parse to remove/add list");
+        },
+        4=>{
+            todo!("Parse the rest of situations");
+        }
     }
 }
 
