@@ -15,7 +15,6 @@ fn main() {
     let args: Vec<String>= std::env::args().collect();
 
     let todo_action = parse_args(&args);
-
 }
 
 // Args manipulation
