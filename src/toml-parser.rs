@@ -25,13 +25,13 @@ fn main() {
             x if x.contains("=")=>{
                 if current_table_index==0 {
                     let key_value:Vec<&str>= x.split("=").collect();
-                    current_file.globals.push(TomlValue {key: key_value[0].to_string(),value: key_value[1].to_string()})
+                    current_file.globals.push(TomlValue {key: key_value[0].to_string(),value: key_value[1..].to_string()})
                 } else {
                     let key_value:Vec<&str>= x.split("=").collect();
-                    current_file.tables[current_table_index-1].values.push(TomlValue {key: key_value[0].to_string(),value: key_value[1].to_string()});
+                    current_file.tables[current_table_index-1].values.push(TomlValue {key: key_value[0].to_string(),value: key_value[1..].to_string()});
                 }    
             },
-            x if x.contains("[")=>{
+            x if x.starts_with("[")=>{
                 let name =x.to_string().replace("[","").replace("]","");
                 current_file.tables.push(TomlTable {name:name, values: vec![]});
                 current_table_index=current_table_index+1;
